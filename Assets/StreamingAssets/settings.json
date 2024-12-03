@@ -1,0 +1,24 @@
+{
+  "buttonData" : 
+  {
+    "dirtyPath" : ["Dirty/00.png", "Dirty/10.png", "Dirty/20.png", "Dirty/30.png", "Dirty/40.png", "Dirty/50.png", "Dirty/60.png", "Dirty/70.png"], 
+    "cleanPath" : ["Clean/movie (1).webm", "Clean/movie (2).webm", "Clean/movie (3).webm", "Clean/movie (4).webm",
+                   "Clean/movie (5).webm", "Clean/movie (6).webm", "Clean/movie (7).webm", "Clean/movie (8).webm"],
+    "size" : {"x" :  200, "y" :  200}
+  },
+  "bkgPath" : ["Background/bkg.mp4"],
+  "backgroundPath" : ["Background/movie (0).webm", "Background/movie (1).webm", "Background/movie (2).webm","Background/movie (3).mp4"],
+  "playTime" : 60,
+  "spawnInterval" : {"x" : 1, "y" :  2},
+  "maxSpawnableNum" : 2,
+  "burningInterval" : {"x" : 0.6, "y" :  1.2},
+  "burningSpawnableNum" : 4,
+  "scaleMinToMax" : {"x" :  0.9, "y" :  1.4},
+  "blockTop" : 0.0,
+  "blockBottom" : 0.0,
+  "backgroundPos" : {"x" : 0, "y" : 0},
+  "speed" : {"x" : 110, "y" :  180},
+  "itemPath" : ["Inventory/1.webm", "Inventory/2.webm","Inventory/3.webm","Inventory/4.webm","Inventory/5.webm","Inventory/6.webm","Inventory/7.webm","Inventory/8.webm"],
+  "portNames" : ["COM4"],
+  "hoverMovie" : ["Background/hover.webm"]
+}
