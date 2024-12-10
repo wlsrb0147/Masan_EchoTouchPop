@@ -1,3 +1,5 @@
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -26,6 +28,8 @@ public class Parent : MonoBehaviour, IPointerDownHandler
     
     private AudioSource _audioSource;
     [SerializeField] private AudioClip[] audioClip;
+
+    private CancellationTokenSource cts;
     
     private void Awake()
     {
@@ -101,6 +105,11 @@ public class Parent : MonoBehaviour, IPointerDownHandler
         scale.z = 1;
         transform.localScale = scale;
         transform.rotation = Quaternion.Euler(Vector3.zero);
+        
+        cts?.Cancel();
+        cts = new CancellationTokenSource();
+        
+        SerOff(cts.Token).Forget();
     }
 
     
@@ -119,21 +128,33 @@ public class Parent : MonoBehaviour, IPointerDownHandler
 
         if (_time < 0)
         {
-            _poolManager.ReleaseAndRemoveList(gameObject);
+            
         }
-        
+    }
+
+    private async UniTaskVoid SerOff(CancellationToken ct)
+    {
+        while (true)
+        {
+            if (_rectTransform.anchoredPosition.y < -650)
+            {
+                _poolManager.ReleaseAndRemoveList(gameObject);
+            }
+
+            await UniTask.Delay(200, cancellationToken: ct);
+        }
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         if (!_isChanged)
         {
+            _rawImage.raycastTarget = false;
             _videoPlayer.time = 0;
             _videoPlayer.targetTexture = _renderTexture;
             _rawImage.texture = _renderTexture;
             _isChanged = true;
             _videoPlayer.Play();
-            _rawImage.raycastTarget = false;
             _isPlaying = true;
             ++_gameManager.score;
             _gameManager.AddInventory(index);
@@ -147,6 +168,7 @@ public class Parent : MonoBehaviour, IPointerDownHandler
             else
             {
                 _audioSource.clip = audioClip[1];
+                _gameManager.score += +9;
             }
 
             if (_audioSource.isPlaying)
@@ -160,6 +182,9 @@ public class Parent : MonoBehaviour, IPointerDownHandler
     private void OnDisable()
     {
         _videoPlayer.targetTexture = null;
+        cts?.Cancel();
+        cts?.Dispose();
+        cts = null;
     }
     
     
