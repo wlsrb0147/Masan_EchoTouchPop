@@ -54,6 +54,9 @@ public class GameManager : MonoBehaviour
 
     private API_Call API_Call;
 
+    public GameObject debugger;
+    private bool _debuggerOn;
+
     public void AddInventory(int x)
     {
         if (!itemImages[x].activeSelf)
@@ -107,6 +110,7 @@ public class GameManager : MonoBehaviour
         _poolManager = PoolManager.Instance;
         InitializeVideo();
         Cursor.visible = false;
+        debugger.SetActive(false);
     }
 
     private void InitializeVideo()
@@ -254,6 +258,11 @@ public class GameManager : MonoBehaviour
             _playTime = _jsonSaver.settings.playTime;
         }
 
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            _debuggerOn = !_debuggerOn;
+            debugger.SetActive(_debuggerOn);
+        }
         
         if (!_gameStart) return;
 

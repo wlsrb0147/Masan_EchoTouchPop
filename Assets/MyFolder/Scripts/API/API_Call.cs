@@ -18,16 +18,14 @@ public class API_Call : MonoBehaviour
     private void Awake()
     {
         gameManager = GameManager.instance;
+
     }
     
     private void Start()
     {
         videoPlayer = gameManager.GetVideo0();
         
-        string apiUrl = "http://192.168.0.254:8500/api/status_ecopop_update.cfm?status=idle";
-
-        // API 요청
-        SendApiRequestAsync(apiUrl, res =>
+        SendApiRequestAsync(API_Idle, res =>
         {
             Debug.Log($"API Response for First Program: {res}");
         }).Forget();
